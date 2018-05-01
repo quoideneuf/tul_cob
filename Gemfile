@@ -10,6 +10,9 @@ gem "sqlite3"
 # Use Puma as the app server
 gem "puma", "~> 3.0"
 # Use SCSS for stylesheets
+gem "bootstrap", "~> 4.0"
+gem "popper_js"
+gem "twitter-typeahead-rails", "0.11.1.pre.corejavascript"
 gem "sass-rails", "~> 5.0"
 # Use Uglifier as compressor for JavaScript assets
 gem "uglifier", ">= 1.3.0"
@@ -51,13 +54,20 @@ end
 gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem "blacklight",
-  git: "https://github.com/projectblacklight/blacklight",
-  ref: "v7.0.0.rc1"
+  #path: "blacklight"
+  git: "https://github.com/dkinzer/blacklight.git",
+  branch: "move-blacklight-core"
 gem "blacklight_advanced_search",
+  #path: "blacklight_advanced_search"
   git: "https://github.com/dkinzer/blacklight_advanced_search",
   branch: "fix-deprecation-warning"
-gem "blacklight-marc"
-gem "blacklight_range_limit"
+gem "blacklight-marc",
+  #path: "blacklight-marc"
+  git: "https://github.com/dkinzer/blacklight-marc.git",
+  branch: "fix-undefined-add-sho-tools-partial-bl7"
+gem "blacklight_range_limit",
+  git: "https://github.com/projectblacklight/blacklight_range_limit.git",
+  branch: "blacklight-7"
 
 group :development, :test do
   gem "solr_wrapper", ">= 0.3"

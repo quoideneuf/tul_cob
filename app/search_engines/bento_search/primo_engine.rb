@@ -6,12 +6,13 @@ module BentoSearch
 
     def search_implementation(args)
       query = args.fetch(:query, "")
+      @user_params = { q: query }
 
       # Avoid making a costly call for no reason.
       if query.empty?
         response = { "docs" => [] }
       else
-        response = search_results(q: query).first["response"]
+        response = search_results.first["response"]
       end
 
       results(response)

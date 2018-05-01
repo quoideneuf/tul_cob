@@ -11,6 +11,8 @@ module CatalogConfigReinit
       config.facet_fields = ActiveSupport::OrderedHash.new
       config.index_fields = ActiveSupport::OrderedHash.new
       config.sort_fields = ActiveSupport::OrderedHash.new
+      config.autocomplete_enabled = false
+      config.autocomplete_path = nil
     end
   end
 end

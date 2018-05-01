@@ -61,17 +61,6 @@ class PrimoCentralController < CatalogController
     config.add_show_field :languageId, label: "Language", multi: true, helper_method: :doc_translate_language_code
   end
 
-  # get a single document from the index
-  # to add responses for formats other than html or json see _Blacklight::Document::Export_
-  def show
-    @document = repository.find params[:id]
-    respond_to do |format|
-      format.html { setup_next_and_previous_documents }
-      format.json { render json: { response: { document: @document } } }
-      additional_export_formats(@document, format)
-    end
-  end
-
   def render_sms_action?(_config, _options)
     # Render if the item can be found at a library
     false

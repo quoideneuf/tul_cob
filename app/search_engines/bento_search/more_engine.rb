@@ -4,9 +4,9 @@ module BentoSearch
   class MoreEngine < BlacklightEngine
     def search_implementation(args)
       query = args.fetch(:query, "")
-      query = { q: query }
+      @user_params = { q: query }
 
-      response = search_results(query, &proc_format_facet_only).first
+      response = search_results(&proc_format_facet_only).first
 
       formats = filtered_format_facets(response)
       response.facet_counts["facet_fields"]["format"] = formats

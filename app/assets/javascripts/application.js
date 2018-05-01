@@ -14,8 +14,12 @@
 //= require 'blacklight_advanced_search'
 //= require chosen-jquery
 //= require jquery_ujs
+//= require twitter/typeahead
+//= require popper
+//= require bootstrap
 //= require turbolinks//
 // Required by Blacklight
+//= require blacklight/core
 //= require blacklight/blacklight
 
 //= require blacklight_alma/blacklight_alma

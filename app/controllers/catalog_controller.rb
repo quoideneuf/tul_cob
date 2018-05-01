@@ -13,6 +13,7 @@ class CatalogController < ApplicationController
 
   include Blacklight::Marc::Catalog
 
+  #include Blacklight::DefaultComponentConfiguration
   #helper BlacklightAlma::HelperBehavior
 
   configure_blacklight do |config|

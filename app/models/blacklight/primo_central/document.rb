@@ -7,6 +7,7 @@ module Blacklight::PrimoCentral::Document
   include Blacklight::PrimoCentral::SolrAdaptor
 
   def initialize(doc, req = nil)
+    doc = doc.to_h.with_indifferent_access
     @url = url(doc)
     @url_query = url_query
     format = doc["@TYPE"] || doc["type"]

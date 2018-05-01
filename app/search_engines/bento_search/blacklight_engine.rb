@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
 module BentoSearch
-  class BlacklightEngine
+  class BlacklightEngine < Blacklight::SearchService
     include BentoSearch::SearchEngine
-    include Blacklight::SearchHelper
+    #include Blacklight::SearchHelper
 
     delegate :blacklight_config, to: CatalogController
 
     def search_implementation(args)
-      query = args.fetch(:query, "")
+      @user_params = args.fetch(:query, "")
 
       results = BentoSearch::Results.new
-      response = search_results(q: query, &proc_remove_facets).first.response
+      response = search_results(&proc_remove_facets).first.response
       results(response)
     end
 
