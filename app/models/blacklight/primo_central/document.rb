@@ -46,13 +46,12 @@ module Blacklight::PrimoCentral::Document
     end
 
     def link_label(doc)
-      get_it(doc).fetch("displayText", "Direct Link")
-        .gsub("$$E", "")
-        .gsub("_", " ")
+      I18n.t("primo_central.link_to_resource")
     end
 
-    def get_it(doc)
-      doc.to_h.dig("delivery", "GetIt1", 0, "links", 0) || {}
+    def get_it(doc = nil)
+      doc = (doc || @_source || {})
+      doc.dig("delivery", "GetIt1", 0, "links", 0) || {}
     end
 
 
