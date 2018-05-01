@@ -1,4 +1,39 @@
 GIT
+  remote: https://github.com/dkinzer/blacklight-marc.git
+  revision: c4ade8f79de278f7c1329e65006e20d5d2e05eb9
+  branch: fix-undefined-add-sho-tools-partial-bl7
+  specs:
+    blacklight-marc (6.2.0)
+      blacklight (> 6.1, < 8.a)
+      library_stdnums
+      marc (>= 0.4.3, < 1.1)
+      marc-fastxmlwriter
+      rails
+      traject (~> 2.1)
+
+GIT
+  remote: https://github.com/dkinzer/blacklight.git
+  revision: 5da4f34f82a0ed23e5b3e746ff9f8823882a8579
+  branch: move-blacklight-core
+  specs:
+    blacklight (7.0.0.rc1)
+      deprecation
+      globalid
+      jbuilder
+      kaminari (>= 0.15)
+      nokogiri (~> 1.6)
+      rails (~> 5.0)
+
+GIT
+  remote: https://github.com/dkinzer/blacklight_advanced_search
+  revision: 9ad8ccfdb27b9b94e0aa7cfe0dd377751f5632d5
+  branch: fix-deprecation-warning
+  specs:
+    blacklight_advanced_search (6.3.1)
+      blacklight (>= 6.0.1)
+      parslet
+
+GIT
   remote: https://github.com/projectblacklight/blacklight_range_limit.git
   revision: 9b1d1664167fd2d673f5e4f8eeb042e75129167c
   branch: blacklight-7
@@ -35,35 +70,6 @@ GIT
   specs:
     primo (0.1.0)
       httparty
-
-PATH
-  remote: blacklight-marc
-  specs:
-    blacklight-marc (6.2.0)
-      blacklight (> 6.1, < 8.a)
-      library_stdnums
-      marc (>= 0.4.3, < 1.1)
-      marc-fastxmlwriter
-      rails
-      traject (~> 2.1)
-
-PATH
-  remote: blacklight_advanced_search
-  specs:
-    blacklight_advanced_search (6.3.1)
-      blacklight (>= 6.0.1)
-      parslet
-
-PATH
-  remote: blacklight
-  specs:
-    blacklight (7.0.0.rc1)
-      deprecation
-      globalid
-      jbuilder
-      kaminari (>= 0.15)
-      nokogiri (~> 1.6)
-      rails (~> 5.0)
 
 GEM
   remote: https://rubygems.org/
@@ -413,7 +419,7 @@ GEM
     thor (0.19.4)
     thread_safe (0.3.6)
     tilt (2.0.8)
-    traject (2.3.3)
+    traject (2.3.4)
       concurrent-ruby (>= 0.8.0)
       dot-properties (>= 0.1.1)
       hashie (~> 3.1)
