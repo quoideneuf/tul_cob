@@ -31,7 +31,7 @@ module ApplicationHelper
   end
 
   def list_with_links(args)
-    args[:document][args[:field]].map { |field| content_tag(:li,  fielded_search(field, args[:field]), class: "list_items") }.join("").html_safe
+    args[:document][args[:field]].map { |field| content_tag(:li,  fielded_search(field, args[:field]), class: "list_items") }.join("").gsub("—", "").html_safe
   end
 
   def creator_index_separator(args)
