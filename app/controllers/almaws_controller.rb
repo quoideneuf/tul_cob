@@ -140,7 +140,7 @@ class AlmawsController < ApplicationController
 
     def date_or_nil(param)
       begin
-        date = Date.strptime(param, "%m-%d-%Y")
+        date = Date.strptime(param, "%Y-%m-%d")
       rescue
         date = nil
       end
