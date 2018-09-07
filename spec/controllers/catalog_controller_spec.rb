@@ -73,8 +73,8 @@ RSpec.describe CatalogController, type: :controller do
   end
 
   describe "Handling rapidill formatted requests" do
-    it 'routes the request to the show page of the item in the rft.mms_id param' do
-      expect(get(:index, params: {"rft.mms_id" => 123})).to redirect_to solr_document_path(123)
+    it "routes the request to the show page of the item in the rft.mms_id param" do
+      expect(get(:index, params: { "rft.mms_id" => 123 })).to redirect_to solr_document_path(123)
     end
   end
 
