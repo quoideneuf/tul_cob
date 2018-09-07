@@ -18,6 +18,14 @@ class CatalogController < ApplicationController
   rescue_from ::BlacklightRangeLimit::InvalidRange,
     with: :raise_bad_range_limit
 
+  before_action :reroute_rapidill_requests, only: :index
+
+  def reroute_rapidill_requests
+    if params["rft.mms_id"]
+      redirect_to solr_document_path(params["rft.mms_id"])
+    end
+  end
+
   configure_blacklight do |config|
     # default advanced config values
     config.advanced_search ||= Blacklight::OpenStructWithHashAccess.new
