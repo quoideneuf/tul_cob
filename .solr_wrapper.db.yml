@@ -1,0 +1,10 @@
+# Place any default configuration for solr_wrapper here
+port: 8984
+collection:
+  dir: solr/conf/
+  name: az-database
+  persist: true
+persist: true
+instance_dir: tmp/solr/
+download_dir: tmp/solr_dl
+version: 6.6.1
