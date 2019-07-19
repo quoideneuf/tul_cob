@@ -75,6 +75,16 @@ class CatalogController < ApplicationController
     # This probably needs to stay in blacklight_config
     #config.fetch_many_document_params =
     #config.default_document_solr_params = {}
+    config.fetch_many_document_params = {
+      wt: "json",
+      fl: %w[
+        *
+        items_json_display:[json]
+        url_finding_aid_display:[json]
+        url_more_links_display:[json]
+      electronic_resource_display:[json] ].join(",")
+    }
+
 
     # solr field configuration for search results/index views
     config.index.title_field = "title_truncated_display"
