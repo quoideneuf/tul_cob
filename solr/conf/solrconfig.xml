@@ -86,23 +86,23 @@
          will be overridden by parameters in the request
       -->
      <lst name="defaults">
-       <str name="wt">json</str>
        <str name="defType">edismax</str>
-       <str name="mm">5&lt;-1 8&lt;75%</str>
+       <str name="echoParams">explicit</str>
+       <int name="rows">10</int>
+       <bool name="sow">false</bool>
+       <str name="q.alt">*:*</str>
 
        <!-- Note that relaxing mm may cause undesired side effects,
        hurting the precision of the search,
        depending on the nature of your index content. -->
        <bool name="mm.autoRelax">true</bool>
+       <str name="wt">json</str>
 
-       <str name="lowercaseOperators">false</str>
+       <bool name="lowercaseOperators">false</bool>
        <int name="ps">3</int>
        <float name="tie">0.01</float>
 
-       <str name="echoParams">explicit</str>
-       <int name="rows">10</int>
 
-       <str name="q.alt">*:*</str>
        <str name="bq">pub_date_tdt:[NOW/DAY-10YEAR TO NOW/DAY]^3500</str>
        <str name="bq">-library_based_boost_t:no_boost^1000</str>
        
