@@ -109,37 +109,37 @@
 
        <!-- NOT using marc_display because it is large and will slow things down for search results -->
        <str name="fl">
-         id
-         availability_facet
-         bound_with_ids
-         call_number_alt_display
-         call_number_display
-         contributor_display
-         creator_display
-         electronic_resource_display
-         format
-         holdings_display
-         holdings_summary_display
-         holdings_with_no_items_display
-         imprint_display
-         imprint_dist_display
-         imprint_man_display
-         imprint_prod_display
-         isbn_display
-         isbn_display
-         lccn_display
-         library_facet
-         location_display
-         pub_date
-         purchase_order
-         score
-         title_series_display
-         title_statement_display
-         title_truncated_display
-         title_uniform_display
-         items_json_display:[json]
-         url_finding_aid_display:[json]
-         url_more_links_display:[json]
+         id,
+         availability_facet,
+         bound_with_ids,
+         call_number_alt_display,
+         call_number_display,
+         contributor_display,
+         creator_display,
+         electronic_resource_display,
+         format,
+         holdings_display,
+         holdings_summary_display,
+         holdings_with_no_items_display,
+         imprint_display,
+         imprint_dist_display,
+         imprint_man_display,
+         imprint_prod_display,
+         isbn_display,
+         isbn_display,
+         lccn_display,
+         library_facet,
+         location_display,
+         pub_date,
+         purchase_order,
+         score,
+         title_series_display,
+         title_statement_display,
+         title_truncated_display,
+         title_uniform_display,
+         items_json_display:[json],
+         url_finding_aid_display:[json],
+         url_more_links_display:[json],
          electronic_resource_display:[json]
        </str>
 
@@ -347,10 +347,10 @@
       <str name="wt">json</str>
       <str name="echoParams">all</str>
       <str name="fl">
-        *
-        items_json_display:[json]
-        url_finding_aid_display:[json]
-        url_more_links_display:[json]
+        *,
+        items_json_display:[json],
+        url_finding_aid_display:[json],
+        url_more_links_display:[json],
         electronic_resource_display:[json]
       </str>
       <str name="rows">1</str>

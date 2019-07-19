@@ -74,7 +74,7 @@ class CatalogController < ApplicationController
 
     # This probably needs to stay in blacklight_config
     #config.fetch_many_document_params =
-      #config.default_document_solr_params = {}
+    #config.default_document_solr_params = {}
 
     # solr field configuration for search results/index views
     config.index.title_field = "title_truncated_display"
