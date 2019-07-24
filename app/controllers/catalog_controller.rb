@@ -72,9 +72,9 @@ class CatalogController < ApplicationController
     #  # q: '{!term f=id v=$id}'
     #}
 
-    # This probably needs to stay in blacklight_config
-    #config.fetch_many_document_params =
-    #config.default_document_solr_params = {}
+    # TODO: figure out why moving this to solrconfig.xml causes
+    # items_json_display to be returned as string not parsed JSON.
+    config.default_document_solr_params =
     config.fetch_many_document_params = {
       wt: "json",
       fl: %w[
