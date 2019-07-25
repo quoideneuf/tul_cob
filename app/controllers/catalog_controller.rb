@@ -75,15 +75,15 @@ class CatalogController < ApplicationController
     # TODO: figure out why moving this to solrconfig.xml causes
     # items_json_display to be returned as string not parsed JSON.
     config.default_document_solr_params =
-    config.fetch_many_document_params = {
-      wt: "json",
-      fl: %w[
-        *
-        items_json_display:[json]
-        url_finding_aid_display:[json]
-        url_more_links_display:[json]
-      electronic_resource_display:[json] ].join(",")
-    }
+      config.fetch_many_document_params = {
+        wt: "json",
+        fl: %w[
+          *
+          items_json_display:[json]
+          url_finding_aid_display:[json]
+          url_more_links_display:[json]
+        electronic_resource_display:[json] ].join(",")
+      }
 
 
     # solr field configuration for search results/index views
