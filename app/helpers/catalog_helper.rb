@@ -123,6 +123,15 @@ module CatalogHelper
     end
   end
 
+  def render_available_libraries(document)
+    if index_fields["bound_with_ids"] && document.alma_availability_mms_ids.present?
+      content_tag :dl, nil, class: "row document-metadata blacklight-availability", "data-availability-ids": document.alma_availability_mms_ids.join(","), "data-controller": "availability", "data-availability-url": "#{item_url(document.alma_availability_mms_ids.first, doc_id: document.id, redirect_to: request.url)}" do
+        html = content_tag :dt, "Available at:", class: "index-label col-md-3"
+        html += content_tag :dd, "test", class: "col-md-5 col-lg-7 available", "data-target": "availability.library"
+      end
+    end
+  end
+
   ##
   # Overridden from module Blacklight::BlacklightHelperBehavior.
   #

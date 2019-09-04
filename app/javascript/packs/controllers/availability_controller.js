@@ -6,7 +6,11 @@ import { Controller } from "stimulus"
     }
 
 export default class extends Controller {
-  static targets = [ "panel", "button", "spinner", "request", "container", "href" ]
+  static targets = [ "panel", "button", "spinner", "request", "container", "href", "library" ]
+
+  initialize() {
+    this.libraries()
+  }
 
   item() {
     this.buttonTarget.classList.toggle("collapsed");
@@ -35,5 +39,18 @@ export default class extends Controller {
     let requests_url = $("#request-url-data-" + mms_id).data("requests-url");
     $(this.hrefTarget).attr("href", requests_url);
     $(this.hrefTarget).append("<span class='fa fa-spinner ml-1' aria-busy='true' aria-live='polite'></span>")
+  }
+
+  libraries() {
+    fetch(this.data.get("url"), {
+      credentials: "same-origin",
+      headers: {
+        "X-CSRF-Token": getMetaValue("csrf-token")
+      },
+    })
+    .then(response => response.text())
+    .then(html => {
+      this.libraryTarget.innerHTML = "test"
+    })
   }
 }
