@@ -14,7 +14,8 @@
 <% end %>
 
 <%= render "search_header" %>
-<span id="alma_availability_url" data-url="<%= alma_availability_url(format: :json) %>" ></span>
+<span id="alma_availability_url" data-url="<%= availability_url(format: :json) %>" ></span>
+<h2 class="sr-only"><%= t("blacklight.search.search_results") %></h2>
 
 <%- if empty_response?(@response) %>
   <%= render "zero_results" %>

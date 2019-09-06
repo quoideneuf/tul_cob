@@ -11,6 +11,16 @@ class AlmawsController < CatalogController
   rescue_from Alma::BibItemSet::ResponseError,
     with: :offset_too_large
 
+  def availability
+    id_list = params[:id_list].split(",")
+    response_data = Alma::Bib.get_availability(id_list, args={})
+
+    respond_to do |format|
+      format.xml  { render :xml => response_data.availability }
+      format.json { render :json => response_data.availability }
+    end
+  end
+
   def item
     @mms_id = params[:mms_id]
     _, @document = begin search_service.fetch(params[:doc_id]) rescue [ nil, SolrDocument.new({}) ] end

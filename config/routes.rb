@@ -129,6 +129,7 @@ Rails.application.routes.draw do
   # too, without removing root_url and root_path helpers. oddly, repeating
   # root seems to work.
 
+  get "almaws/availability", to:  "almaws#availability", as: "availability"
   get "almaws/item/:mms_id", to:  "almaws#item", as: "item"
   get "almaws/request/:mms_id/:pickup_location/:request_level", to: "almaws#request_options", as: "request_options"
   post "almaws/request/digitization", to: "almaws#send_digitization_request", as: "digitization_request"
