@@ -1,12 +1,17 @@
 
-loadAvailability = function (idList, attemptCount) {
+const loadAvailabilityAjax = (idList, attemptCount) => {
   idList = "991036860006003811"
-  const url = $('#alma_availability_url').data('url') + "?id_list=" + encodeURIComponent(idList);
-    fetch(url)
-      .then(function(data) {
-        console.log(data);
-      })
-    // if(idList.length > 0) {
+  const url = $("#alma_availability_url").data("url") + "?id_list=" + encodeURIComponent(idList);
+  fetch(url, {
+    method: "GET",
+    headers:{
+      "Content-Type": "application/json"
+    }
+  })
+  .then(res => res.json())
+  .then(response => console.log("Success:", JSON.stringify(response)))
+  .catch(error => console.error("Error:", error));
+};
     //     console.log(url);
     //     $.ajax(url, {
     //         success: function(data, textStatus, jqXHR) {
@@ -60,6 +65,37 @@ loadAvailability = function (idList, attemptCount) {
     //         }
     //     });
     // }
+
+
+loadAvailabilityAjax();
+
+partitionArray = function(size, arr) {
+  return arr.reduce(function(acc, a, b) {
+    if(b % size == 0  && b !== 0) {
+      acc.push([]);
+    }
+    acc[acc.length - 1].push(a);
+    return acc;
+  }, [[]]);
 };
 
-loadAvailability();
+/**
+ * Looks for elements with class availability-ajax-load,
+ * batches up the values in their data-availability-id attribute,
+ * makes the AJAX request, and replaces the contents
+ * of the element with availability information.
+ */
+loadAvailability = function() {
+  const allIds = $(".availability-ajax-load").map(function (index, element) {
+    return $(element).data("availabilityIds");
+  }).get();
+
+  var idArrays = partitionArray(size, allIds);
+
+  idArrays.forEach(function(idArray) {
+    var idArrayStr = idArray.join(",");
+    loadAvailabilityAjax(idArrayStr, 1);
+  });
+};
+
+loadAvailabilityAjax();

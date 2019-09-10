@@ -52,34 +52,34 @@ var BlacklightAlma = function (options) {
     $(availButton).show();
   }
 
- // availabilityInfo = function (holding) {
- //   var library = holding['library'];
- //   if (library == 'ASRS' || library == 'Paley Library') {
- //     library = "Charles Library";
- //   }
- //
- //   var availability = holding['availability'];
- //
- //   if (library != "EMPTY") {
- //     var hiddenLibraries = ["Special Collections Research Center"] // Temporary change until SCRC opens
- //     if (availability == "available" && hiddenLibraries.includes(holding['library']) == false) {
- //       availItem = {};
- //       Object.assign(availItem, {library, availability})
- //       return availItem;
- //     }
- //
- //     if (availability == "check_holdings") {
- //       checkItem = {};
- //       Object.assign(checkItem, {library, availability})
- //       return checkItem;
- //     }
- //   }
- // }
+ availabilityInfo = function (holding) {
+   var library = holding['library'];
+   if (library == 'ASRS' || library == 'Paley Library') {
+     library = "Charles Library";
+   }
+
+   var availability = holding['availability'];
+
+   if (library != "EMPTY") {
+     var hiddenLibraries = ["Special Collections Research Center"] // Temporary change until SCRC opens
+     if (availability == "available" && hiddenLibraries.includes(holding['library']) == false) {
+       availItem = {};
+       Object.assign(availItem, {library, availability})
+       return availItem;
+     }
+
+     if (availability == "check_holdings") {
+       checkItem = {};
+       Object.assign(checkItem, {library, availability})
+       return checkItem;
+     }
+   }
+ }
 
  BlacklightAlma.prototype.formatHolding = function (holding) {
-   // if(holding['inventory_type'] == 'physical') {
-   //   return availabilityInfo(holding);
-   // }
+   if(holding['inventory_type'] == 'physical') {
+     return availabilityInfo(holding);
+   }
  };
 
  sortedLibraries = function (holdings) {
