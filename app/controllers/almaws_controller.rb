@@ -13,11 +13,11 @@ class AlmawsController < CatalogController
 
   def availability
     id_list = params[:id_list].split(",")
-    response_data = Alma::Bib.get_availability(id_list, args={})
+    response_data = Alma::Bib.get_availability(id_list, args = {})
 
     respond_to do |format|
-      format.xml  { render :xml => response_data.availability }
-      format.json { render :json => response_data.availability }
+      format.xml  { render xml: response_data.availability }
+      format.json { render json: response_data.availability }
     end
   end
 
