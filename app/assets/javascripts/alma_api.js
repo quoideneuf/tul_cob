@@ -1,6 +1,5 @@
 
 const loadAvailabilityAjax = (idList, attemptCount) => {
-  idList = "991036860006003811"
   const url = $("#alma_availability_url").data("url") + "?id_list=" + encodeURIComponent(idList);
   fetch(url, {
     method: "GET",
@@ -12,7 +11,7 @@ const loadAvailabilityAjax = (idList, attemptCount) => {
   .then(response => console.log("Success:", JSON.stringify(response)))
   .catch(error => console.error("Error:", error));
 };
-    //     console.log(url);
+
     //     $.ajax(url, {
     //         success: function(data, textStatus, jqXHR) {
     //             if(!data.error) {
@@ -85,17 +84,19 @@ partitionArray = function(size, arr) {
  * makes the AJAX request, and replaces the contents
  * of the element with availability information.
  */
-loadAvailability = function() {
-  const allIds = $(".availability-ajax-load").map(function (index, element) {
+loadAllAvailability = function() {
+  let allIds = $(".blacklight-availability").map(function (index, element) {
     return $(element).data("availabilityIds");
   }).get();
 
-  var idArrays = partitionArray(size, allIds);
+  var idArrays = partitionArray(10, allIds);
 
   idArrays.forEach(function(idArray) {
     var idArrayStr = idArray.join(",");
+    console.log("test")
+    console.log(idArrayStr);
     loadAvailabilityAjax(idArrayStr, 1);
   });
 };
 
-loadAvailabilityAjax();
+loadAllAvailability();
