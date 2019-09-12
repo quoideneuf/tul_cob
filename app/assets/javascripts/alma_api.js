@@ -1,6 +1,7 @@
 // Actually makes the AJAX call for availability
 const loadAvailabilityAjax = (idList, attemptCount) => {
-  const url = $("#alma_availability_url").data("url") + "?id_list=" + encodeURIComponent(idList);
+  const dataUrl = document.getElementById("alma_availability_url")
+  const url = dataUrl.dataset.url + "?id_list=" + encodeURIComponent(idList);
   fetch(url, {
     method: "GET",
     headers:{
@@ -8,7 +9,7 @@ const loadAvailabilityAjax = (idList, attemptCount) => {
     }
   })
   .then(res => res.json())
-  .then(response => console.log("Success:", JSON.stringify(response)))
+  .then(response => console.log("Success:", response))
   .catch(error => console.error("Error:", error));
 };
 
@@ -23,14 +24,11 @@ const partitionArray = (size, arr) => {
   }, [[]]);
 };
 
-/**
- * Looks for elements with class blacklight-availabililty, batches up the values in their data-availability-id attribute,
- * makes the AJAX request, and replaces the contents of the element with availability information.
-*/
+// Batches the data-availability-ids, makes the AJAX request, and replaces the contents of the element with availability information.
 const loadAvailability = () => {
   let elementIds = Array.prototype.slice.call(document.getElementsByClassName("blacklight-availability"));
   const allIds = elementIds.map(element => {
-    return $(element).data("availabilityIds");
+    return element.dataset.availabilityIds;
   });
 
   let idArrays = partitionArray(10, allIds);
@@ -45,8 +43,9 @@ const loadAvailability = () => {
 const checkAndPopulateMissing = () => {
   let availabilityIds = Array.prototype.slice.call(document.getElementsByClassName("blacklight-availability"));
   availabilityIds.filter(element => {
-    document.querySelector("span:not(.blacklight-availability)")
-    noHoldingsAvailabilityButton($(element).data("availabilityIds"));
-    $(element).html("<span style='color: red'>No status available for this item</span>");
+    document.querySelector("dl:not(.blacklight-availability)")
+    // Can I do this here?  Or does it need to be in another function chained to this one?
+    noHoldingsAvailabilityButton(element.dataset.availabilityIds);
+    element.innerHTML += "<span style='color: red'>No status available for this item</span>";
   })
 };
