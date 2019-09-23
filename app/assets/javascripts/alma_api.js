@@ -31,47 +31,45 @@ let availStatusByLibrary = (holding) => {
   }
 };
 
-let sortedLibraries = (holdings) => {
-  holdings.sort();
-  if (holdings.indexOf("Charles Library") > 0) {
-      holdings.splice(holdings.indexOf("Charles Library"), 1);
-      holdings.unshift("Charles Library");
-  }
-};
-
 let availableHoldings = (holdings) => {
   let availHoldings = [];
   holdings.forEach(holding => {
-    let availability = availabilityInfo(holding)
-    if (holding.availability == "available") {
-      console.log(holding.library)
+    let updatedAvailability = availabilityInfo(holding)
+    if (updatedAvailability["availability"] == "available") {
 
-      availHoldings.push(availability.library);
+      availHoldings.push(updatedAvailability["library"]);
+      availHoldings.sort();
+
+      if (availHoldings.indexOf("Charles Library") > 0) {
+          availHoldings.splice(holdings.indexOf("Charles Library"), 1);
+          availHoldings.unshift("Charles Library");
+      }
     }
+    return availHoldings;
   });
 
-  sortedLibraries(availHoldings);
-
-  let list = availHoldings.filter(function (x, i, a) {
-    return a.indexOf(x) == i;
-  });
+  let list = [... new Set(availHoldings)]
+  // console.log("avail:" + list)
   return list.join("<br/>");
 }
 
 let checkHoldings = function (holdings) {
   let check = [];
   holdings.forEach(holding => {
-    if (holding.availability == "check_holdings") {
-      let availability = availabilityInfo(holding)
-      checkHoldings.push(availability.library);
+    let updatedAvailability = availabilityInfo(holding)
+    if (updatedAvailability["availability"] == "check_holdings") {
+      check.push(updatedAvailability["library"]);
+      check.sort();
+
+      if (check.indexOf("Charles Library") > 0) {
+          check.splice(holdings.indexOf("Charles Library"), 1);
+          check.unshift("Charles Library");
+      }
     }
   });
 
-  sortedLibraries(check);
-
-  let list = check.filter(function (x, i, a) {
-    return a.indexOf(x) == i;
-  });
+  let list = [... new Set(check)]
+  console.log("check:" + list)
   return list.join("<br/>");
 }
 
