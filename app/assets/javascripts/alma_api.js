@@ -49,7 +49,7 @@ let availableHoldings = (holdings) => {
   });
 
   let list = [... new Set(availHoldings)]
-  // console.log("avail:" + list)
+  console.log("avail: " + list)
   return list.join("<br/>");
 }
 
@@ -69,7 +69,7 @@ let checkHoldings = function (holdings) {
   });
 
   let list = [... new Set(check)]
-  console.log("check:" + list)
+  console.log("check: " + list)
   return list.join("<br/>");
 }
 
@@ -77,19 +77,17 @@ let libraryLists = (holdings) => {
   let html = ""
   let available = availableHoldings(holdings);
   let check = checkHoldings(holdings);
-
   let elementIds = Array.prototype.slice.call(document.getElementsByClassName("blacklight-availability"));
-  const allIds = elementIds.map(html => {
+
+  elementIds.forEach(html => {
     if (available) {
-      html.innerHTML = "<dt class='index-label col-md-3' >Available at: </dt><dd class='col-md-5 col-lg-7'>" + available + "</dd>";
+      html.innerHTML = "<dt class='index-label col-md-4 col-lg-3' >Available at: </dt><dd class='col-md-5 col-lg-7'>" + available + "</dd>";
     }
 
     if (check) {
-      html.innerHTML = "<dt class='index-label col-md-3' >Other Libraries: </dt><dd class='col-md-5 col-lg-7'>" + check + "</dd>";
+      html.innerHTML += "<dt class='index-label col-md-4 col-lg-3' >Other Libraries: </dt><dd class='col-md-5 col-lg-7'>" + check + "</dd>";
     }
   });
-
-
 };
 
 // Actually makes the AJAX call for availability
