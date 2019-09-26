@@ -25,17 +25,19 @@ let availabilityInfo = (holding) => {
   }
 }
 
-// Returns a hash with library name and availability status
+// Returns availability only for physical items
 let availStatusByLibrary = (holding) => {
   if (holding["inventory_type"] == "physical") {
     return availabilityInfo(holding);
   }
 };
 
+// Generates a sorted list of libraries where items are available
 let availableHoldings = (holdings) => {
   let availHoldings = [];
   holdings.forEach(holding => {
-    let updatedAvailability = availabilityInfo(holding)
+    let physicalHolding = availStatusByLibrary(holding)
+    let updatedAvailability = availabilityInfo(physicalHolding)
     if (updatedAvailability["availability"] == "available") {
 
       availHoldings.push(updatedAvailability["library"]);
@@ -54,10 +56,12 @@ let availableHoldings = (holdings) => {
   return list.join("<br/>");
 }
 
+// Generates a sorted list of libraries where items have the check_holdings availability status
 let checkHoldings = function (holdings) {
   let check = [];
   holdings.forEach(holding => {
-    let updatedAvailability = availabilityInfo(holding)
+    let physicalHolding = availStatusByLibrary(holding)
+    let updatedAvailability = availabilityInfo(physicalHolding)
     if (updatedAvailability["availability"] == "check_holdings") {
       check.push(updatedAvailability["library"]);
       check.sort();
@@ -74,18 +78,19 @@ let checkHoldings = function (holdings) {
   return list.join("<br/>");
 }
 
+// Adds a sorted list of libraries for available/check_holdings to html
 let libraryLists = (id, holdings) => {
   let html = ""
   let available = availableHoldings(holdings);
   let check = checkHoldings(holdings);
-  let elementId = document.getElementById(`library-list-${id}`);
+  let element = document.getElementById(`library-list-${id}`);
 
     if (available) {
-      elementId.innerHTML = "<dt class='index-label col-md-4 col-lg-3' >Available at: </dt><dd class='col-md-5 col-lg-7'>" + available + "</dd>";
+      element.innerHTML = "<dt class='index-label col-md-4 col-lg-3' >Available at: </dt><dd class='col-md-5 col-lg-7'>" + available + "</dd>";
     }
 
     if (check) {
-      elementId.innerHTML += "<dt class='index-label col-md-4 col-lg-3' >Other Libraries: </dt><dd class='col-md-5 col-lg-7'>" + check + "</dd>";
+      element.innerHTML += "<dt class='index-label col-md-4 col-lg-3' >Other Libraries: </dt><dd class='col-md-5 col-lg-7'>" + check + "</dd>";
     }
 };
 
@@ -115,19 +120,19 @@ const loadAvailabilityAjax = (idList, attemptCount) => {
     });
   })
   .catch(error => {
-    var msg = error['error']['errorMessage'];
-    var isSingleId = idList.indexOf(",") === -1;
+    let msg = error;
+    let isSingleId = idList.indexOf(",") === -1;
     // this happens when an MMS ID has been deleted in Alma but Discovery hasn't caught up yet
-    if(msg.indexOf("Input parameters") !== -1 && msg.indexOf("is not valid.") !== -1 && !isSingleId) {
-        console.log("Invalid MMS ID error from API, retrying batch as individual requests");
-        idList.split(",").forEach(function(id) {
-            baObj.availabilityRequestsFinished[id] = false;
-            baObj.loadAvailabilityAjax(id, baObj.MAX_AJAX_ATTEMPTS);
-        });
-    } else {
-        baObj.errorLoadingAvailability(idList);
-    }
-
+    // if(msg.indexOf("Input parameters") !== -1 && msg.indexOf("is not valid.") !== -1 && !isSingleId) {
+    //     console.log("Invalid MMS ID error from API, retrying batch as individual requests");
+    //     idList.split(",").forEach(function(id) {
+    //         baObj.availabilityRequestsFinished[id] = false;
+    //         baObj.loadAvailabilityAjax(id, baObj.MAX_AJAX_ATTEMPTS);
+    //     });
+    // } else {
+    //     baObj.errorLoadingAvailability(idList);
+    // }
+    //
   });
 };
 
