@@ -125,7 +125,7 @@ module CatalogHelper
 
   def render_available_libraries(document)
     if index_fields["bound_with_ids"] && document.alma_availability_mms_ids.present?
-      content_tag :dl, nil, class: "row document-metadata blacklight-availability", "data-availability-ids": document.alma_availability_mms_ids.join(","), "data-controller": "availability", "data-availability-url": "#{item_url(document.alma_availability_mms_ids.first, doc_id: document.id, redirect_to: request.url)}" do
+      content_tag :dl, nil, id: "library-list-#{document.id}", class: "row document-metadata blacklight-availability", "data-availability-ids": document.alma_availability_mms_ids.join(","), "data-controller": "availability", "data-availability-url": "#{item_url(document.alma_availability_mms_ids.first, doc_id: document.id, redirect_to: request.url)}" do
       end
     end
   end

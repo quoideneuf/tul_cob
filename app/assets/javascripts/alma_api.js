@@ -21,6 +21,7 @@ let availabilityInfo = (holding) => {
       checkItem = Object.assign(checkItem, {library, availability})
       return checkItem;
     }
+    return {}
   }
 }
 
@@ -73,21 +74,19 @@ let checkHoldings = function (holdings) {
   return list.join("<br/>");
 }
 
-let libraryLists = (holdings) => {
+let libraryLists = (id, holdings) => {
   let html = ""
   let available = availableHoldings(holdings);
   let check = checkHoldings(holdings);
-  let elementIds = Array.prototype.slice.call(document.getElementsByClassName("blacklight-availability"));
+  let elementId = document.getElementById(`library-list-${id}`);
 
-  elementIds.forEach(html => {
     if (available) {
-      html.innerHTML = "<dt class='index-label col-md-4 col-lg-3' >Available at: </dt><dd class='col-md-5 col-lg-7'>" + available + "</dd>";
+      elementId.innerHTML = "<dt class='index-label col-md-4 col-lg-3' >Available at: </dt><dd class='col-md-5 col-lg-7'>" + available + "</dd>";
     }
 
     if (check) {
-      html.innerHTML += "<dt class='index-label col-md-4 col-lg-3' >Other Libraries: </dt><dd class='col-md-5 col-lg-7'>" + check + "</dd>";
+      elementId.innerHTML += "<dt class='index-label col-md-4 col-lg-3' >Other Libraries: </dt><dd class='col-md-5 col-lg-7'>" + check + "</dd>";
     }
-  });
 };
 
 // Actually makes the AJAX call for availability
@@ -106,16 +105,30 @@ const loadAvailabilityAjax = (idList, attemptCount) => {
       let holdings = data[id]["holdings"];
       if (holdings.length > 0) {
         let formatted = holdings.filter(holding => {
-          // availabilityButton(id, holding);
+          availabilityButton(id, holding);
           return availStatusByLibrary(holding);
         })
-        return libraryLists(formatted);
+        return libraryLists(id, holdings);
       } else {
-        // noHoldingsAvailabilityButton(id);
+        noHoldingsAvailabilityButton(id);
       }
     });
   })
-  .catch(error => console.error("Error:", error));
+  .catch(error => {
+    var msg = error['error']['errorMessage'];
+    var isSingleId = idList.indexOf(",") === -1;
+    // this happens when an MMS ID has been deleted in Alma but Discovery hasn't caught up yet
+    if(msg.indexOf("Input parameters") !== -1 && msg.indexOf("is not valid.") !== -1 && !isSingleId) {
+        console.log("Invalid MMS ID error from API, retrying batch as individual requests");
+        idList.split(",").forEach(function(id) {
+            baObj.availabilityRequestsFinished[id] = false;
+            baObj.loadAvailabilityAjax(id, baObj.MAX_AJAX_ATTEMPTS);
+        });
+    } else {
+        baObj.errorLoadingAvailability(idList);
+    }
+
+  });
 };
 
 // Partitions an array into arrays of specified size

@@ -12,12 +12,21 @@ class AlmawsController < CatalogController
     with: :offset_too_large
 
   def availability
-    id_list = params[:id_list].split(",")
-    response_data = Alma::Bib.get_availability(id_list, args = {})
 
-    respond_to do |format|
-      format.xml  { render xml: response_data.availability }
-      format.json { render json: response_data.availability }
+    id_list = params[:id_list].split(",")
+    begin
+      response_data = Alma::Bib.get_availability(id_list, args = {})
+
+      respond_to do |format|
+        format.xml  { render xml: response_data.availability }
+        format.json { render json: response_data.availability }
+      end
+
+    rescue StandardError => e
+        respond_to do |format|
+          format.json { render plain: e.message }
+        end
+
     end
   end
 
