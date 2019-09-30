@@ -1,3 +1,35 @@
+// Checks whether availaiblity has been generated yet, and adds/removes classes based on status
+let availabilityButton = (id, holding) => {
+  let availButton = document.querySelector("button[data-availability-ids='" + id + "']");
+  if (!availButton.classList.contains("btn-success")) {
+    if(holding['availability'] == "available") {
+      availButton.innerHTML = "<span class='avail-label available'>Available</span>";
+      availButton.classList.remove("btn-default");
+      availButton.classList.add("btn-success", "collapsed", "collapse-button", "available", "availability-btn");
+    }
+    else if(holding['availability'] == 'check_holdings') {
+      availButton.innerHTML = "<span class='avail-label available'>Available</span>";
+      availButton.classList.remove("btn-default");
+      availButton.classList.add("btn-success", "collapsed", "collapse-button", "available availability-btn");
+    }
+    else {
+      unavailableItems(id);
+    }
+  }
+}
+
+let noHoldingsAvailabilityButton = (id) => {
+  unavailableItems(id);
+ }
+
+let unavailableItems = (id) => {
+  let availButton = document.querySelector("button[data-availability-ids='" + id + "']");
+
+  availButton.innerHTML = "<span class='avail-label not-available'>Not Available</span>";
+  availButton.classList.remove("btn-default");
+  availButton.classList.add("btn-warning", "collapsed", "collapse-button", "availability-btn");
+}
+
 // First checks for libraries with available items, then libraries with check_holdings status
 let availabilityInfo = (holding) => {
   let library = holding["library"];
@@ -106,34 +138,25 @@ const loadAvailabilityAjax = (idList, attemptCount) => {
   })
   .then(res => res.json())
   .then(function(data) {
-    Object.keys(data).forEach(id => {
-      let holdings = data[id]["holdings"];
-      if (holdings.length > 0) {
-        let formatted = holdings.filter(holding => {
-          availabilityButton(id, holding);
-          return availStatusByLibrary(holding);
-        })
-        return libraryLists(id, holdings);
-      } else {
-        noHoldingsAvailabilityButton(id);
-      }
-    });
-  })
-  .catch(error => {
-    let msg = error;
-    let isSingleId = idList.indexOf(",") === -1;
-    // this happens when an MMS ID has been deleted in Alma but Discovery hasn't caught up yet
-    // if(msg.indexOf("Input parameters") !== -1 && msg.indexOf("is not valid.") !== -1 && !isSingleId) {
-    //     console.log("Invalid MMS ID error from API, retrying batch as individual requests");
-    //     idList.split(",").forEach(function(id) {
-    //         baObj.availabilityRequestsFinished[id] = false;
-    //         baObj.loadAvailabilityAjax(id, baObj.MAX_AJAX_ATTEMPTS);
-    //     });
+    if(!data.error) {
+      Object.keys(data).forEach(id => {
+        let holdings = data[id]["holdings"] || [];
+        if (holdings.length > 0) {
+          holdings.map(holding => {
+            availabilityButton(id, holding);
+            return availStatusByLibrary(holding);
+          })
+          return libraryLists(id, holdings);
+        } else {
+          noHoldingsAvailabilityButton(id);
+        }
+      })
+    }
     // } else {
-    //     baObj.errorLoadingAvailability(idList);
+    //   console.log("test")
     // }
-    //
-  });
+  })
+  .catch(error => console.log(error));
 };
 
 // Partitions an array into arrays of specified size
