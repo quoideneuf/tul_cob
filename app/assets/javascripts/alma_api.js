@@ -1,6 +1,7 @@
-// Checks whether availaiblity has been generated yet, and adds/removes classes based on status
+// Checks whether availaiblity has been generated yet, and adds/removes classes based on available status
 let availabilityButton = (id, holding) => {
   let availButton = document.querySelector("button[data-availability-ids='" + id + "']");
+
   if (!availButton.classList.contains("btn-success")) {
     if(holding['availability'] == "available") {
       availButton.innerHTML = "<span class='avail-label available'>Available</span>";
@@ -10,7 +11,7 @@ let availabilityButton = (id, holding) => {
     else if(holding['availability'] == 'check_holdings') {
       availButton.innerHTML = "<span class='avail-label available'>Available</span>";
       availButton.classList.remove("btn-default");
-      availButton.classList.add("btn-success", "collapsed", "collapse-button", "available availability-btn");
+      availButton.classList.add("btn-success", "collapsed", "collapse-button", "available", "availability-btn");
     }
     else {
       unavailableItems(id);
@@ -18,10 +19,12 @@ let availabilityButton = (id, holding) => {
   }
 }
 
+// Generates the button for unavailable items
 let noHoldingsAvailabilityButton = (id) => {
   unavailableItems(id);
  }
 
+ // Checks whether availaiblity has been generated yet, and adds/removes classes based on unavailable status
 let unavailableItems = (id) => {
   let availButton = document.querySelector("button[data-availability-ids='" + id + "']");
 
